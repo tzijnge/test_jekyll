@@ -1,5 +1,5 @@
 main:
   - title: "Test 123"
-    url: _site/test123
+    url: /test123
   - title: "Test 456"
-    url: /test456.html
+    url: /test456
