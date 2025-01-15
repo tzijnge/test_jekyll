@@ -1,6 +1,7 @@
 ---
-author_profile: true
 title: LotusRPC 🌼
+author_profile: true
+toc: true
 ---
 
 RPC framework for embedded systems based on [ETL](https://github.com/ETLCPP/etl). Generates C++ code with no dynamic memory allocations, no exceptions, no RTTI, etc. 
