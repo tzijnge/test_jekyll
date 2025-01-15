@@ -9,6 +9,6 @@ test 123
 lorem ipsum
 
 ## wassup
-'''
+```
 Some code
-'''
+```
