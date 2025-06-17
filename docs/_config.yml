@@ -160,7 +160,7 @@ footer:
       icon: "fab fa-fw fa-instagram"
       # url:
 
-after_footter_scripts:
+after_footer_scripts:
   - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
   - /assets/js/mermaid.js
 
@@ -264,7 +264,6 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
-  - jekyll-mermaid
 
 # mimic GitHub Pages with --safe
 whitelist:

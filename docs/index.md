@@ -29,7 +29,7 @@ RPC framework for embedded systems based on [ETL](https://github.com/ETLCPP/etl)
     - A custom enum can have any number of fields
     - Translated to an `enum class` in the generated C++ code
 
-## Mermaid 2
+## Mermaid
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
 <div class="mermaid">
@@ -40,23 +40,14 @@ graph TD;
     C-->D;
 </div>
 
-## Mermaid
+## Mermaid 2
 ``` mermaid
-sequenceDiagram
-autoNumber
-  Alice->>John: Hello John, how are you?
-  John-->>Alice: Great!
-  Alice-)John: See you later!
-```
-
-## Mermaid 3
-{% mermaid %}
 graph TD;
     A-->B;
     A-->C;
     B-->D;
     C-->D;
-{% endmermaid %}
+```
 
 ## Multiple return values
 Multiple return values for a function are supported. In the generated C++ code this feature is translated to a function returning a `std::tuple`
