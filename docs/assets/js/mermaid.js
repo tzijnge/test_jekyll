@@ -1,5 +1,7 @@
+---
+---
 $(document).ready(function () {
-    var mmSkin = "dark"
+    var mmSkin = "{{ site.minimal_mistakes_skin }}"
     var mjsTheme = {
       "air": "default",
       "aqua": "default",
