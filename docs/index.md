@@ -49,6 +49,15 @@ autoNumber
   Alice-)John: See you later!
 ```
 
+## Mermaid 3
+{% mermaid %}
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+{% endmermaid %}
+
 ## Multiple return values
 Multiple return values for a function are supported. In the generated C++ code this feature is translated to a function returning a `std::tuple`
 
