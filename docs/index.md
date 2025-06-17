@@ -38,7 +38,6 @@ graph LR
     A --> C(Round Rect)
     B --> D{Rhombus}
     C --> D
-
 </div>
 
 ## Mermaid 2
@@ -48,7 +47,6 @@ graph LR
     A --> C(Round Rect)
     B --> D{Rhombus}
     C --> D
-
 ```
 
 ## Multiple return values
