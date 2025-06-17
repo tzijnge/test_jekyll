@@ -31,12 +31,11 @@ RPC framework for embedded systems based on [ETL](https://github.com/ETLCPP/etl)
 
 ## Mermaid
 ``` mermaid
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
+sequenceDiagram
+autoNumber
+  Alice->>John: Hello John, how are you?
+  John-->>Alice: Great!
+  Alice-)John: See you later!
 ```
 
 ## Multiple return values
