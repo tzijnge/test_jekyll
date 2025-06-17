@@ -15,7 +15,7 @@ $(document).ready(function () {
       "sunrise": "default"
     }[mmSkin]
     mermaid.initialize({
-      startOnLoad: false,
+      startOnLoad: true,
       theme: mjsTheme
     })
     mermaid.init({
