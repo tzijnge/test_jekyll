@@ -38,6 +38,17 @@ autoNumber
   Alice-)John: See you later!
 ```
 
+## Mermaid 2
+<script src="https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js"></script>
+
+<div class="mermaid">
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</div>
+
 ## Multiple return values
 Multiple return values for a function are supported. In the generated C++ code this feature is translated to a function returning a `std::tuple`
 
