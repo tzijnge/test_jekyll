@@ -29,6 +29,16 @@ RPC framework for embedded systems based on [ETL](https://github.com/ETLCPP/etl)
     - A custom enum can have any number of fields
     - Translated to an `enum class` in the generated C++ code
 
+## Mermaid
+``` mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 ## Multiple return values
 Multiple return values for a function are supported. In the generated C++ code this feature is translated to a function returning a `std::tuple`
 
