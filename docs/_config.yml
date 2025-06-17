@@ -162,7 +162,7 @@ footer:
 
 after_footter_scripts:
   - https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.js
-  - assets/js/mermaid.js
+  - /assets/js/mermaid.js
 
 # Reading Files
 include:
