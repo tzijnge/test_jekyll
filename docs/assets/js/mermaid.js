@@ -1,5 +1,3 @@
----
----
 $(document).ready(function () {
     var mmSkin = "{{ site.minimal_mistakes_skin }}"
     var mjsTheme = {
