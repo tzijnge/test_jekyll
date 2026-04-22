@@ -1,6 +1,7 @@
 ---
 title: Meta service
 toc: true
+toc_icon: server
 ---
 
 ## Background

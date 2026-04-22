@@ -1,6 +1,7 @@
 ---
 title: Interface definition reference
 toc: true
+toc_icon: book-open
 ---
 
 ## Introduction

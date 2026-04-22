@@ -1,6 +1,7 @@
 ---
 title: Definition overlays
 toc: true
+toc_icon: layer-group
 ---
 
 ## Overview

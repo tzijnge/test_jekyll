@@ -1,6 +1,7 @@
 ---
 title: Protocol internals
 toc: true
+toc_icon: microchip
 ---
 
 **Audience:** This page is for engineers who want to understand or inspect the bytes that LotusRPC puts on the wire. You do not need this information to use LotusRPC.

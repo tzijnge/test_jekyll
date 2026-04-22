@@ -1,6 +1,7 @@
 ---
 title: Settings reference
 toc: true
+toc_icon: sliders-h
 ---
 
 ## Settings

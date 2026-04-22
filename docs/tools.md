@@ -1,6 +1,7 @@
 ---
 title: Tools
 toc: true
+toc_icon: tools
 ---
 
 ## LRPCG

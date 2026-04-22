@@ -1,6 +1,7 @@
 ---
 title: Getting started
 toc: true
+toc_icon: rocket
 ---
 
 ## Concepts and terminology
@@ -212,4 +213,4 @@ sequenceDiagram
     Client ->> Server: message 3 [final=true]
 ```
 
-For details on the generated C++ API for streams, see the [C++ API reference](cpp_api#streams).
+For details on the generated C++ API for streams, see the [C++ API reference](cpp_api.md#streams).

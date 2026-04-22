@@ -19,7 +19,7 @@ graph LR
 
 Define your interface once in YAML. LotusRPC generates everything else: the C++ server stub, all serialization code, and a Python client. You implement the business logic; LotusRPC handles the protocol.
 
-[Get started](getting_started){: .btn .btn--primary .btn--large} &nbsp; [Reference](reference){: .btn .btn--large} &nbsp; [C++ API](cpp_api){: .btn .btn--large} &nbsp; [Examples](examples){: .btn .btn--large}
+[Get started](getting_started){: .btn .btn--primary .btn--large} &nbsp; [Reference](reference){: .btn .btn--primary .btn--large} &nbsp; [C++ API](cpp_api){: .btn .btn--primary .btn--large} &nbsp; [Examples](examples){: .btn .btn--primary .btn--large}
 
 ## Key features
 

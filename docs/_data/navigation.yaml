@@ -1,9 +1,3 @@
-main:
-  - title: "Getting started"
-    url: /getting_started
-  - title: "Release notes"
-    url: /CHANGES
-
 docs:
   - title: "Getting started"
     url: /getting_started

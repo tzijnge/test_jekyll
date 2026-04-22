@@ -1,6 +1,7 @@
 ---
 title: Extending LotusRPC
 toc: true
+toc_icon: plug
 ---
 
 ## Visiting LrpcDef
