@@ -1,92 +1,76 @@
 ---
-title: LotusRPC 🌼
+title: LotusRPC
 author_profile: true
-toc: true
+toc: false
 ---
 
-RPC framework for embedded systems based on [ETL](https://github.com/ETLCPP/etl). Generates C++ code for your device with no dynamic memory allocations, no exceptions, no RTTI, etc.
+⚠ **This project is work in progress.**
+{: .notice--warning}
 
-> **_WARNING:_**  This project is work in progress
+RPC framework for embedded systems. Generates C++ server code and a Python client from a single YAML definition file. Built on [ETL](https://github.com/ETLCPP/etl) — no dynamic memory allocations, no exceptions, no RTTI.
 
-# Features
-## Supported data types
-- basic types: `(u)intx_t`, `float`, `double`, `bool`
-- string
-  - Fixed size: e.g., `string_10` for a maximum size of 10 characters (excluding termination character)
-  - Automatic size: `string`. For this type the number of bytes that is transferred is determined by how long the actual string is. This can be different for every RPC function call, contrary to the fixed size string.
-- array
-  - Array can be of any type except `string`
-  - Enabled by using the `count` setting in the definition file with any value larger than 1
-- optional
-  - Can be used with any type
-  - Translated to `etl::optional` in the generated C++ code
-  - Enabled by using the `count` setting in the definition file with a value `?`
-- custom
-  - struct
-    - A custom struct can have any number of fields of any type except `string`, even other custom types
-    - A custom struct can be used as a function argument or function return type by referencing it with a `@`-prefix
-  - enum
-    - A custom enum can have any number of fields
-    - Translated to an `enum class` in the generated C++ code
+## How it works
 
-## Mermaid
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-
-<div class="mermaid">
-graph LR
-    A[Square Rect] -- Link text --> B((Circle))
-    A --> C(Round Rect)
-    B --> D{Rhombus}
-    C --> D
-</div>
-
-## Mermaid 2
 ``` mermaid
 graph LR
-    A[Square Rect] -- Link text --> B((Circle))
-    A --> C(Round Rect)
-    B --> E{Rhombus}
-    C --> E
+    C["Client\nPC · Python"] <-->|"function call / return"| T["Transport\nserial · BT · TCP · …"]
+    T <-->|bytes| S["Server\nMCU · C++"]
 ```
 
-## Multiple return values
-Multiple return values for a function are supported. In the generated C++ code this feature is translated to a function returning a `std::tuple`
+Define your interface once in YAML. LotusRPC generates everything else: the C++ server stub, all serialization code, and a Python client. You implement the business logic; LotusRPC handles the protocol.
 
-## Interface definition file
-The interface definition file is in YAML format. This makes it easy to parse in many languages and use it for any other purpose that you may need. There is a schema for the interface definition file to provide code completion and error checking in editors that support JSON schema.
+[Get started](getting_started){: .btn .btn--primary .btn--large} &nbsp; [Reference](reference){: .btn .btn--large} &nbsp; [C++ API](cpp_api){: .btn .btn--large} &nbsp; [Examples](examples){: .btn .btn--large}
 
-## Code generation in a namespace
-All code is generated in the namespace specified in the interface definition file. If no namespace is specified, all code is generated in the global namespace
+## Key features
 
-## Configuration of receive and transmit buffer size
-Receive and transmit buffer sizes can be configured in the interface definition file. If not specified, both take the value of 256 bytes
+- **No dynamic memory** — stack-only, no heap, no exceptions, no RTTI
+- **Transport agnostic** — serial, Bluetooth, TCP — any byte-oriented channel works
+- **YAML definitions** — schema-validated, editor-friendly, easy to parse or extend
+- **Code generation** — `lrpcg` produces all C++ server and client code in one command
+- **CLI client** — `lrpcc` lets any team member call remote functions without writing code
+- **Streams** — client-to-server and server-to-client data streams, finite or infinite
+- **C++11 compatible** — works on any platform with a modern C++ compiler
 
-## Fully configurable service and function IDs
-Every LRPC service has an ID with a value between 0 and 254 (ID 255 is reserved for). This means that LRPC supports a maximum of 255 services. Duplicate service IDs are not allowed. The service ID can optionally be specified in the definition file. If it is not specified an ID is generated, starting with 0 for the first service, 1 for the second service, etc. It is possible to specify only some service IDs and let the rest be generated automatically. For example, if a definition contains 4 services, but only the third service has a specified ID of 17, then the resulting service IDs are [0, 1, 17, 18]
+## Quick example
 
-The same applies to LRPC functions inside a service.
+Define an interface in YAML:
 
-## Platform independent
-LRPC uses Python to generate code and can therefore be used on all platforms that support Python. The generated C++ code is C++11 compatible and can be compiled for any platform with a suitable compiler.
-
-> **DISCLAIMER:** All development is done on Windows. Continuous integration is done with Github Actions on Ubuntu.
-
-# Example definition
 ``` yaml
+name: example
+settings:
+  namespace: ex
 services:
-  - name: "battery"
+  - name: math
     functions:
-      - name: "get"
+      - name: add
         params:
-          - name: "option"
-            type: "@VoltageScales"
+          - { name: a, type: int32_t }
+          - { name: b, type: int32_t }
         returns:
-          - name: "voltage"
-            type: double
-enums:
-  - name: "VoltageScales"
-    fields:
-        name: "microvolts"
-        name: "millivolts"
-        name: "volts"
+          - { name: result, type: int32_t }
 ```
+
+Generate code, implement the function, and call it from the command line:
+
+``` bash
+lrpcg cpp -d example.lrpc.yaml -o generated/
+lrpcc math add 3 7   # prints: result = 10
+```
+
+See [Getting started](getting_started) for a complete walkthrough.
+
+## Supported data types
+
+| Category | Types |
+|----------|-------|
+| Integer  | `uint8_t`, `int8_t`, `uint16_t`, `int16_t`, `uint32_t`, `int32_t`, `uint64_t`, `int64_t` |
+| Float    | `float`, `double` |
+| Bool     | `bool` |
+| String   | `string` (auto size), `string_N` (fixed size N) |
+| Bytearray | `bytearray` — flexible-length byte buffer |
+| Array    | Any type with `count: N` (N ≥ 2) |
+| Optional | Any type with `count: ?` |
+| Struct   | Composite user-defined type |
+| Enum     | User-defined enumeration, translated to `enum class` |
+
+For details on each type and the C++ mappings, see the [C++ API reference](cpp_api) and the [interface definition reference](reference).

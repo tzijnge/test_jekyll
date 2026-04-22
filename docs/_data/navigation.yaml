@@ -1,9 +1,31 @@
 main:
   - title: "Getting started"
     url: /getting_started
+  - title: "Release notes"
+    url: /CHANGES
+
+docs:
+  - title: "Getting started"
+    url: /getting_started
+  - title: "Reference"
+    children:
+      - title: "Interface definition"
+        url: /reference
+      - title: "Settings"
+        url: /reference_settings
+      - title: "Overlays"
+        url: /reference_overlays
+  - title: "C++ API"
+    url: /cpp_api
   - title: "Tools"
     url: /tools
+  - title: "Examples"
+    url: /examples
   - title: "Extending LotusRPC"
     url: /extending_lrpc
-  - title: "Reference"
-    url: /reference
+  - title: "Protocol internals"
+    url: /binary
+  - title: "Meta service"
+    url: /meta
+  - title: "Release notes"
+    url: /CHANGES
