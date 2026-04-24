@@ -2,7 +2,6 @@
 title: LotusRPC release notes
 toc: true
 toc_icon: history
-toc_levels: 2
 ---
 
 LotusRPC is an RPC framework for embedded systems. Here are the release notes.

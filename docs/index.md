@@ -12,12 +12,37 @@ RPC framework for embedded systems. Generates C++ server code and a Python clien
 ## How it works
 
 ``` mermaid
-graph LR
-    C["Client\nPC · Python"] <-->|"function call / return"| T["Transport\nserial · BT · TCP · …"]
-    T <-->|bytes| S["Server\nMCU · C++"]
+graph TD
+    DEF["example.lrpc.yaml\nYAML interface definition"]
+    LRPCG("lrpcg cpp")
+
+    subgraph GEN["Generated C++"]
+        SRV_GEN["Server class\nframing · serialization · dispatch"]
+        SHIM_GEN["Service shim\none pure-virtual function per RPC call"]
+    end
+
+    subgraph IMPL["Your implementation — two classes"]
+        MY_SRV["MyServer\nlrpcTransmit → UART · SPI · TCP · …"]
+        MY_SVC["MyService\nadd() · get_temperature() · …"]
+    end
+
+    TRANSPORT("Transport\nserial · Bluetooth · TCP · …")
+
+    subgraph CLIENT["Client — PC · Python"]
+        CLI["lrpcc\nCLI tool, no code needed"]
+        LIB["LrpcClient\ncustom Python code"]
+    end
+
+    DEF -->|"lrpcg cpp -d"| LRPCG
+    LRPCG --> GEN
+    DEF -.->|also used by| CLIENT
+    SRV_GEN -->|"inherit"| MY_SRV
+    SHIM_GEN -->|"inherit + implement"| MY_SVC
+    MY_SRV <-->|"lrpcReceive / lrpcTransmit"| TRANSPORT
+    TRANSPORT <-->|"function calls + responses"| CLIENT
 ```
 
-Define your interface once in YAML. LotusRPC generates everything else: the C++ server stub, all serialization code, and a Python client. You implement the business logic; LotusRPC handles the protocol.
+Define your interface once in YAML. LotusRPC generates everything else: the C++ server class, all serialization and framing code, and the service shim with one pure-virtual function per RPC call. You write two classes: wire `lrpcTransmit` to your hardware, and implement your business logic in the service shim. LotusRPC handles the rest.
 
 [Get started](getting_started){: .btn .btn--primary .btn--large} &nbsp; [Reference](reference){: .btn .btn--primary .btn--large} &nbsp; [C++ API](cpp_api){: .btn .btn--primary .btn--large} &nbsp; [Examples](examples){: .btn .btn--primary .btn--large}
 
@@ -61,16 +86,16 @@ See [Getting started](getting_started) for a complete walkthrough.
 
 ## Supported data types
 
-| Category | Types |
-|----------|-------|
-| Integer  | `uint8_t`, `int8_t`, `uint16_t`, `int16_t`, `uint32_t`, `int32_t`, `uint64_t`, `int64_t` |
-| Float    | `float`, `double` |
-| Bool     | `bool` |
-| String   | `string` (auto size), `string_N` (fixed size N) |
-| Bytearray | `bytearray` — flexible-length byte buffer |
-| Array    | Any type with `count: N` (N ≥ 2) |
-| Optional | Any type with `count: ?` |
-| Struct   | Composite user-defined type |
-| Enum     | User-defined enumeration, translated to `enum class` |
+| Category  | Types                                                                                    |
+|-----------|------------------------------------------------------------------------------------------|
+| Integer   | `uint8_t`, `int8_t`, `uint16_t`, `int16_t`, `uint32_t`, `int32_t`, `uint64_t`, `int64_t` |
+| Float     | `float`, `double`                                                                        |
+| Bool      | `bool`                                                                                   |
+| String    | `string` (auto size), `string_N` (fixed size N)                                          |
+| Bytearray | `bytearray` — flexible-length byte buffer                                                |
+| Array     | Any type with `count: N` (N ≥ 2)                                                         |
+| Optional  | Any type with `count: ?`                                                                 |
+| Struct    | Composite user-defined type                                                              |
+| Enum      | User-defined enumeration, translated to `enum class`                                     |
 
 For details on each type and the C++ mappings, see the [C++ API reference](cpp_api) and the [interface definition reference](reference).
