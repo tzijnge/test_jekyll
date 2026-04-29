@@ -68,6 +68,22 @@ A function has the following properties:
 
 It is possible to define an alias for the combined function returns with `returns_alias`. For functions with multiple, complex return values this can significantly improve readability of generated C++ code. The alias must be a valid C++ identifier and not collide with any of the function parameter or return names.
 
+Example:
+
+``` yaml
+functions:
+  - name: get_log
+    returns_alias: LogChunk
+    returns:
+      - name: entries
+        type: string_64
+        count: 5
+      - name: count
+        type: uint32_t
+```
+
+See [C++ API — Multiple return values](cpp_api.md#multiple-return-values) for the generated code.
+
 ### Streams
 
 Streams are similar to functions, but they don't have any return values. In fact, there is no response to stream data at all. Stream data can consist of any number of items. Data can be streamed from client to server of vice versa (determined by `origin`), but a data stream is always initiated by the client. While `params` in a function are always from client to server, in a stream the direction of `params` depends on the direction of the stream.
@@ -82,7 +98,7 @@ A stream has the following properties:
 
 `name` is the name of the stream. It must be a valid C++ identifier. `origin` determines the direction of the stream. It can be either _client_ or _server_. `id` is the stream identifier, similar to the [service ID](#service-id). `params` is a list of parameters. Every item in `params` is a [LrpcType](#lrpctype).
 
-Sometimes a stream can produce an infinite amount of messages, for example a sensor data stream from server to client. In this case the client starts the stream and stops the stream when needed. In other cases a stream is limited by design, for example retrieving all log messages stored on a device. In this case it's useful for the receiving side to know when the last message has been received. LotusRPC can help in this situation if the `finite` property is set to true, but it does come at a small cost. Every message gets an implicit boolean parameter (one byte) that is only true for the final message. The [LotusRPC client CLI](tools.md#lrpcc) uses this information to gracefully terminate a streaming session
+Sometimes a stream can produce an infinite amount of messages, for example a sensor data stream from server to client. In this case the client starts the stream and stops the stream when needed. In other cases a stream is limited by design, for example retrieving all log messages stored on a device. In this case it's useful for the receiving side to know when the last message has been received. LotusRPC can help in this situation if the `finite` property is set to true, but it does come at a small cost. Every message gets an implicit boolean parameter (one byte) that is only true for the final message. The [LotusRPC client CLI](lrpcc.md) uses this information to gracefully terminate a streaming session
 
 When a service contains both functions and streams, automatic ID assignment depends on which is specified first.
 
