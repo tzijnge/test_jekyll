@@ -32,6 +32,9 @@ pip install lotusrpc
 
 **Define your interface** (`math.lrpc.yaml`):
 
+> [!NOTE]
+> By convention, LotusRPC definition files use the `.lrpc.yaml` extension.
+
 ```yaml
 name: math
 settings:
@@ -58,17 +61,23 @@ lrpcg cpp -d math.lrpc.yaml -o generated/
 ```cpp
 #include "math/math.hpp"
 
-class CalcService : public ex::calc_shim {
+class CalcService : public ex::calc_shim
+{
 protected:
-    int32_t add(int32_t a, int32_t b) override { return a + b; }
+    int32_t add(int32_t a, int32_t b) override
+    {
+        return a + b;
+    }
 };
 ```
 
 Subclass the generated server to provide a transport, register your service, and feed incoming bytes:
 
 ```cpp
-class MathServer : public ex::math {
-    void lrpcTransmit(lrpc::span<const uint8_t> bytes) override {
+class MathServer : public ex::math
+{
+    void lrpcTransmit(lrpc::span<const uint8_t> bytes) override
+    {
         uart_write(bytes.data(), bytes.size());  // your hardware here
     }
 };
@@ -92,9 +101,7 @@ lrpcc calc add 3 7   # result = 10
 Full documentation is at **[tzijnge.github.io/LotusRpc](https://tzijnge.github.io/LotusRpc/)**, including:
 
 - [Getting started](https://tzijnge.github.io/LotusRpc/getting_started) — complete walkthrough
-- [C++ API reference](https://tzijnge.github.io/test_jekyll/cpp_api) — generated server and shim classes
-- [Interface definition reference](https://tzijnge.github.io/LotusRpc/reference) — all YAML options
+- [Interface definition reference](https://tzijnge.github.io/LotusRpc/reference/definition) — all YAML options
+- [C++ API reference](https://tzijnge.github.io/LotusRpc/cpp_api) — generated server and shim classes
+- [Python API](https://tzijnge.github.io/LotusRpc/python-api/client) — client library and definition model
 - [Examples](https://tzijnge.github.io/LotusRpc/examples) — math service and STM32 example
-
-> [!CAUTION]
-> Link to cpp_api must be updated to project LotusRPC.
